@@ -1,10 +1,10 @@
-Senior Cheat Sheet
+# Senior Cheat Sheet
 
 ---
 
 # 🧠 MİMARİ STRATEJİLER (Architectural Thinking)
 
-### 🔷 Microservice Architecture
+## 🔷 Microservice Architecture
 
 * **Dezavantajlar:** Distributed transaction zorluğu, operational overhead, consistency yönetimi.
 * **Strateji:** Her servis kendi bounded context’ine göre tanımlanmalı. Shared DB **antipattern**dir.
