@@ -1,4 +1,4 @@
-Mid Developer Cheat Sheet
+# Mid Developer Cheat Sheet
 
 ---
 
