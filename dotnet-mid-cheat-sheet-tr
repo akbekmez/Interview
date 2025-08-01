@@ -1,0 +1,176 @@
+Mid Developer Cheat Sheet
+
+---
+
+# 🧠 **Mimari Yaklaşımlar**
+
+### ✅ **Microservice Architecture**
+
+* **Avantaj:** Bağımsız deploy, scaling, hata izolasyonu.
+* **Zorluk:** Dağıtık sistem karmaşıklığı, versiyonlama, network latency.
+* **Ne zaman?** Büyük, domain’e bölünebilir, bağımsız ekipler varsa.
+* **Gerekenler:** API Gateway (Ocelot), Service Discovery (Consul/Eureka), Resilience (Polly, Circuit Breaker).
+
+### ✅ **Service Oriented Architecture (SOA)**
+
+* **Legacy dünyada hâlen kullanılıyor.** Genellikle ESB (Enterprise Service Bus) içerir.
+* **Uygun yer:** Kamu ve kurumsal entegrasyonlarda hâlâ güçlüdür.
+
+### ✅ **Event-Driven Architecture (EDA)**
+
+* **Loose coupling**, yüksek ölçeklenebilirlik.
+* **Tool’lar:** Kafka, RabbitMQ, Azure Event Grid, EventBridge.
+* **Dikkat:** Event ordering, duplicate event handling, idempotency stratejileri gerekir.
+
+### ✅ **Domain Driven Design (DDD)**
+
+* **Strategic Design:** Bounded Context, Ubiquitous Language, Context Map.
+* **Tactical Design:** Entity, ValueObject, Aggregate, Repository, Service.
+* **Not:** DDD, sadece kod değil, organizasyonel yapı tasarımıdır.
+
+---
+
+# 🧪 **Yazılım Geliştirme Pratikleri**
+
+### ✅ **Test Driven Development (TDD)**
+
+* **Fayda:** Regressions azaltılır, refactor güvenli olur.
+* **Anti-pattern:** "Test için test yazmak". Tasarımı yönlendirsin.
+* **TDD ≠ Unit Test yazmak.** İlk adım tasarımı testle kurmaktır.
+
+### ✅ **Evolutionary Database Design**
+
+* **Her versiyonla migration gelir.**
+* **Tool’lar:** EF Core Migrations, Flyway, Liquibase.
+* **Dikkat:** Backward compatible DB schema, zero downtime migration.
+
+### ✅ **Clean Code / SOLID / DRY / YAGNI**
+
+* **Pratikte:** Fazla soyutlama (abstraction hell) → SOLID suistimali olur.
+* **Kodun amacı:** Okunabilirlik > Zekice görünmek.
+* **YAGNI:** "Feature toggle" varsa, kullanılmayan kodu saklama tuzağına düşme.
+
+---
+
+# ⚙️ **Performans / İzleme / Güvenlik**
+
+### ✅ **Monitoring & Observability**
+
+* **Metrics:** Prometheus + Grafana
+* **Logs:** ELK, EFK, Loki
+* **Tracing:** OpenTelemetry, Jaeger, Zipkin
+* **Uygulama içi izleme:** Application Insights, Dynatrace, Datadog
+
+### ✅ **Secure API Design**
+
+* Rate limiting, Input validation, HTTPS, OAuth2, Scope-based access.
+* JWT + Refresh token flow + Rotation mekanizması olmalı.
+* **Audit logs, IP whitelisting, mTLS, API Key + HMAC** gibi stratejiler kullanılabilir.
+
+---
+
+# 🛰️ **İletişim / Messaging / Realtime**
+
+### ✅ **Kafka / RabbitMQ**
+
+* Kafka: High-throughput, stream processing (Apache Flink/Spark).
+* RabbitMQ: Message acknowledgement, routing, durability.
+* **Event versioning / Schema registry (Avro/Protobuf) yönetimi gereklidir.**
+
+### ✅ **SignalR / WebSocket**
+
+* Real-time haberleşme için SignalR abstraction sunar.
+* Ölçeklenebilirlik için Redis backplane ya da Azure SignalR Service önerilir.
+
+### ✅ **Idempotency**
+
+* POST isteklerinin tekrar edilmesinde veri bozulmaması.
+* **Çözüm:** Idempotency Key + Store Layer veya Cache (Redis).
+
+---
+
+# 🗂️ **Veri & Depolama**
+
+### ✅ **SQL / NoSQL**
+
+* SQL: ACID, ilişkili veri (PostgreSQL, MSSQL).
+* NoSQL: BASE, esnek şema.
+
+  * MongoDB (document), Cassandra (column), Redis (key-value), DynamoDB (AWS managed).
+
+### ✅ **Elasticsearch / SOLR**
+
+* **Search/analytics için optimize.**
+* Elasticsearch: Kibana ile görselleştirme, full-text search.
+* Dikkat: **Heap size**, **index lifecycle management**, **shard strategy** önemli.
+
+---
+
+# 🧱 **API / Entegrasyon / Gateway**
+
+### ✅ **RESTful API & HATEOAS**
+
+* REST: CRUD.
+* HATEOAS: Navigasyon. REST'i semantik olarak tamamlar.
+
+### ✅ **Ocelot / Eureka / Consul**
+
+* Ocelot: .NET için API Gateway.
+* Eureka: Spring için servis discovery.
+* Consul: KV Store + Health Check + Discovery.
+
+### ✅ **SOAP / XML / WCF**
+
+* Banka & kamu gibi kurumlarda hâlâ hayat kurtarır.
+* Modernleştirme için adapter veya façade katmanı şart.
+
+---
+
+# 🧰 **Geliştirici Deneyimi ve DevOps**
+
+### ✅ **Docker / Kubernetes / Terraform / Ansible**
+
+* Docker: Uygulama kapsülleme.
+* Kubernetes: Deployment, scaling, service discovery.
+* Terraform: Cloud altyapısını kodla tanımla.
+* Ansible: Konfigürasyon yönetimi.
+
+### ✅ **CI/CD (Jenkins, GitHub Actions, GitLab, Azure DevOps)**
+
+* Build → Test → SonarQube → Dockerize → Deploy → Monitor
+
+### ✅ **Load Balancing (Nginx, HAProxy, IIS)**
+
+* Layer 4: TCP
+* Layer 7: HTTP routing, SSL termination, rate limiting, sticky sessions.
+
+---
+
+# 🧮 **Concurrency & Parallelism**
+
+### ✅ **Async / Parallel / Thread Safety / Tasks**
+
+* Task.Run yerine `async/await` tercih edilir.
+* Deadlock, race condition, thread starvation konularına hâkim ol.
+
+### ✅ **Delegates / Events**
+
+* Event Aggregator, Observer Pattern, CQRS Event Bus yapılarıyla ilişkilidir.
+
+---
+
+# 📌 **Ekstra Senior Notları**
+
+* **İyi bir senior**, teknoloji seçmeden önce problemi analiz eder.
+* **Teknolojiyi değil, problemi çözen çözümü savunur.**
+* Her yeni araç/terim bir “borç” getirir: **Operational burden**, eğitim süreci, maintain cost.
+
+---
+
+İstersen bu listeyi:
+
+* PDF veya Notion formatında dışa aktarabilirim
+* Teknoloji başına kısa “nerede kullanılmaz?” maddeleri ekleyebilirim
+* “Benim projemde hangisini kullanayım?” gibi senaryolarla zenginleştirebilirim
+
+Nasıl ilerleyelim, karar ver?
