@@ -1,0 +1,213 @@
+Junior Cheat Sheet
+---
+
+## 🔨 Yazılım Mimari Temelleri
+
+**Microservice Architecture**
+Her bir servis bağımsız, küçük, kendi veritabanı ve logic'i ile çalışır. Örnek: Sipariş servisi, stok servisi ayrı.
+
+**Service Oriented Architecture (SOA)**
+Microservice’in büyük abisi. Tüm sistem, servislerden oluşur ama daha sıkı bağlılık olabilir.
+
+**Event-Driven Architecture (EDA)**
+Bir şey olunca (event), diğer parçalar haberdar olur. Kafka, RabbitMQ ile yaygındır.
+
+**Domain Driven Design (DDD)**
+İş problemlerine odaklan. Kodun, iş dünyasının terimleriyle konuşmalı.
+
+**Layered Architecture**
+Katmanlar: UI → Business Logic → Data Access. Her katmanın görevi net.
+
+**Clean Code / SOLID / DRY / YAGNI**
+
+* **Clean Code**: Okunabilir, test edilebilir kod.
+* **SOLID**: 5 prensip → Tek sorumluluk, açık-kapalı, Liskov, arayüz ayrımı, bağımlılık tersine çevirme.
+* **DRY**: Kendini tekrar etme.
+* **YAGNI**: İhtiyacın yoksa yazma.
+
+**Design Patterns**
+Tekrar eden problemler için şablonlar. Örn: Singleton, Factory, Strategy.
+
+**AOP (Aspect Oriented Programming)**
+Loglama, hata yakalama gibi kesişen işler ayrı yazılır.
+
+**Dependency Injection (DI) / Inversion of Control (IoC)**
+Kod bağımlılıklarını dışarıdan enjekte et. Test edilebilirlik artar.
+
+---
+
+## 👨‍💻 Yazılım Geliştirme Yöntemleri
+
+**Test Driven Development (TDD)**
+Önce test, sonra kod. Kod testten geçene kadar uğraş.
+
+**Evolutionary Database Design (EDD)**
+Veritabanı da kod gibi evrim geçirmeli, migration yap.
+
+**Agile / Agile PM / Design Thinking**
+
+* **Agile**: Çevik yaklaşım, küçük parçalarla ilerle.
+* **Design Thinking**: Kullanıcı odaklı tasarım düşüncesi.
+
+**Software Development Life Cycle (SDLC)**
+Yazılımın hayat döngüsü: Plan → Tasarım → Geliştirme → Test → Yayın → Bakım.
+
+---
+
+## 🚢 DevOps & Cloud
+
+**CI/CD / GitLab CI/CD / GitHub Actions / Jenkins / Azure DevOps / Bitbucket Pipelines**
+Kod push → Otomatik test → Otomatik deploy.
+
+**Docker / Kubernetes / Container Orchestration**
+Uygulamayı konteynerle paketle → Orkestrasyon ile yönet.
+
+**Ansible / Terraform**
+Altyapıyı kodla tanımla (Infrastructure as Code).
+
+**Hybrid Cloud / Public Cloud**
+Sunucuların bazıları bulutta, bazıları şirket içinde olabilir.
+
+**Load Balancer (Nginx, HaProxy, IIS, vs.)**
+Trafiği dengeler. Performans ve kesintisiz hizmet sağlar.
+
+**DevOps**
+Geliştirici + Operasyon. Kod, test, dağıtım hepsi entegre.
+
+---
+
+## 📊 Monitoring ve Gözlemleme
+
+**Prometheus / Grafana / Dynatrace / Nagios / Zabbix / PRT**
+Uygulama sağlığına bakar. Hataları, CPU’yu, bellek tüketimini takip eder.
+
+**ELK / EFK Stack**
+Logları topla, filtrele, göster. (Elasticsearch, Logstash/Fluentd, Kibana)
+
+---
+
+## 🔐 Güvenlik & İletişim
+
+**OAuth2 / JWT**
+
+* **OAuth2**: Yetkilendirme protokolü.
+* **JWT**: Token ile kullanıcı doğrulama.
+
+**CORS**
+Farklı domainlerden API çağırmak için izin verir.
+
+**Idempotency**
+Aynı istek tekrar edilirse sonucu değişmemeli. (Mesela: ödeme 2 kez çekilmemeli)
+
+**HATEOAS**
+REST içinde link’lerle yönlendirme sağlar.
+
+**Firewall Concepts / Secure API Design**
+
+* API sadece gerekeni açmalı.
+* Girişler filtrelenmeli, HTTPS kullanılmalı.
+
+---
+
+## 📬 Mesajlaşma & Realtime
+
+**Kafka / RabbitMQ**
+Mesaj kuyrukları. Servisler arasında veri aktarımı.
+
+**SignalR / WebSocket**
+Gerçek zamanlı veri. Örn: sohbet uygulaması.
+
+**Realtime Communication**
+Canlı veri akışı. Kullanıcıya anlık bilgi ulaştır.
+
+---
+
+## 🧠 Veri Tabanları
+
+**SQL (PostgreSQL / MySQL / SQL Server)**
+Yapısal veriler, ilişkisel veri tabanı.
+
+**NoSQL (MongoDB / Cassandra / DynamoDB / Redis / SOLR / Elasticsearch)**
+
+* **MongoDB**: JSON benzeri doküman veritabanı.
+* **Redis**: Hızlı, geçici veri.
+* **Elasticsearch**: Arama motoru.
+* **SOLR**: Apache destekli arama çözümü.
+* **Realtime DB**: Firebase gibi. Anında veri güncelle.
+
+**EF Migrations / Transact SQL / SSIS / DTS**
+
+* **EF Migration**: .NET için veritabanı güncellemeleri.
+* **T-SQL**: SQL Server’a özel sorgular.
+* **SSIS / DTS**: Veri taşıma & dönüştürme.
+
+**Memcached**
+Redis gibi. Hızlı veri erişimi için.
+
+---
+
+## 🔄 Entegrasyon & Web Servisler
+
+**RESTful API / Web Services / WCF / Windows Service / SOAP, XML, JSON**
+
+* REST, JSON: Modern web servisleri.
+* SOAP, XML: Eski ama hâlâ bazı kurumsal yerlerde yaygın.
+* WCF: .NET içinde servis yazımı.
+
+**Ocelot / Eureka / Consul**
+
+* **Ocelot**: .NET için API Gateway.
+* **Eureka / Consul**: Servis keşfi (Service Discovery).
+
+**Idempotent API Design**
+Aynı çağrı tekrar gelse bile sistem doğru çalışmalı.
+
+---
+
+## 🧰 Geliştirici Araçları
+
+**Git / GitHub / Postman / SoapUI**
+Kod yönetimi ve API test araçları.
+
+**Jira / Confluence**
+İş takibi ve dokümantasyon.
+
+**Figma / Axure / Balsamiq**
+UI/UX tasarım araçları.
+
+---
+
+## 🧵 Asenkron Programlama & Threading
+
+**Async / Parallel / Task / Thread Safety**
+
+* İşlemleri eşzamanlı yap.
+* Thread safe: Aynı anda çalışan kodların çakışmaması.
+
+**Delegates / Events**
+Callback’ler. Bir olay olunca haber ver.
+
+---
+
+## 📐 Performans & Mühendislik
+
+**Performance / Scalability / Reliability**
+
+* Performans: Hız.
+* Scalability: Yük artarsa sistem dayanır mı?
+* Reliability: Hatalara karşı sağlamlık.
+
+**Software Architecture Principles**
+Yapılar mantıklı, sürdürülebilir ve ölçeklenebilir olmalı.
+
+---
+
+## ⚡ Ekstra Bilgiler
+
+* **Realtime Databases**: Firebase gibi anlık veri değişim sistemleri.
+* **Secure API Design**: En az yetki, rate limit, input validation şart.
+* **System Monitoring**: Uptime, response time, alert’ler takip edilmeli.
+
+---
+
+İstersen bunu PDF, Markdown veya Word olarak da verebilirim. Ya da bu listeyi seviyelendirip (Junior / Mid / Senior) detaylandırabiliriz. Nasıl ilerleyelim?
