@@ -1,0 +1,177 @@
+Senior Cheat Sheet
+
+---
+
+# 🧠 MİMARİ STRATEJİLER (Architectural Thinking)
+
+### 🔷 Microservice Architecture
+
+* **Dezavantajlar:** Distributed transaction zorluğu, operational overhead, consistency yönetimi.
+* **Strateji:** Her servis kendi bounded context’ine göre tanımlanmalı. Shared DB **antipattern**dir.
+* **Ekosistem:** API Gateway, Service Discovery, Distributed Tracing, Schema Registry, Circuit Breaker.
+
+### 🔷 Event-Driven Architecture (EDA)
+
+* **Use case:** Decoupling, asenkron iş akışları, audit trail, retry mekanizmaları.
+* **Riskler:** Event storming yapılmadan başlanırsa spaghetti mesajlaşma olur.
+* **Karar kriteri:** Eventual consistency kabul ediliyorsa tercih edilir.
+
+### 🔷 DDD – Domain-Driven Design
+
+* **Strategic Design:** Organizasyon yapısı (Conway’s Law), takım dağılımı, bağımsız release planlaması.
+* **Tactical Design:** Aggregates, invariants, application vs domain service ayrımı, entity lifecycle yönetimi.
+
+### 🔷 SOA / Monolith / Modular Monolith
+
+* **SOA:** Heavyweight, genelde ESB + XML + WSDL içerir.
+* **Modular Monolith:** Microservice’a geçmeden önce kullanılabilecek en temiz çözüm.
+
+---
+
+# 🚦 UYGULAMA MİMARİSİ & PRATİKLERİ
+
+### 🔷 Layered vs Hexagonal Architecture
+
+* **Layered:** Klasik UI → Service → Repo.
+* **Hexagonal (Ports & Adapters):** Domain merkezde, dış dünya adapte edilebilir.
+* **Strateji:** Test edilebilirlik, dış bağımlılık izolasyonu için Hexagonal tercih edilir.
+
+### 🔷 Clean Architecture
+
+* Use Cases katmanı domain ile UI’yı soyutlar. Dependency flow sadece içeri doğrudur.
+* En dış katman (API, Infra) sadece delivery concern’dur.
+
+### 🔷 CQRS + Event Sourcing
+
+* **Fayda:** Yazma ve okuma operasyonlarının ayrılması.
+* **Zorluk:** Event replay, snapshot, eventual consistency ve versioning yönetimi gerekir.
+* **Uygulama:** High-scale sistemlerde, özellikle finansal işlemlerde güçlüdür.
+
+---
+
+# 🔐 GÜVENLİK & RİSK YÖNETİMİ
+
+### 🔷 OAuth2 / OIDC / JWT
+
+* Authorization Server olmadan Access Token üretmek ciddi risk.
+* Token içerikleri şifreli değil → Bilgi sızıntısı olabilir.
+* **Refresh token rotation** + **sliding expiration** kullanılmalı.
+
+### 🔷 Idempotency
+
+* Her kritik endpoint (özellikle POST /payment, /order gibi) için uygulanmalı.
+* Redis bazlı idempotency cache veya Idempotency Key header kullanılmalı.
+
+### 🔷 Secure API Design
+
+* HSTS, CSP, XSS koruması, input validation, RBAC/ABAC uygulanmalı.
+* **API Rate Limiting**, throttling, IP filtering gibi teknik önlemlerle desteklenmeli.
+
+---
+
+# 🧱 VERİ MİMARİSİ VE VERİYİ TAŞIMA
+
+### 🔷 SQL vs NoSQL
+
+* **Karar kriteri:** Veri tutarlılığı (consistency) > esneklik mi?
+* PostgreSQL 14+ ile JSONB, full-text ve index’lenebilir aggregate veri yapısı mümkündür.
+* **NoSQL:** Schema evolution, CAP teorisi, consistency tradeoff’ları iyi anlaşılmalı.
+
+### 🔷 Elasticsearch
+
+* Search + Aggregation gücü yüksek.
+* **Dikkat:** Index boyutu, shard sayısı, replica stratejisi iyi ayarlanmalı.
+
+### 🔷 Redis / Memcached
+
+* Redis: Persistence ve scripting destekler.
+* Memcached: Saf in-memory, çok hızlı ama kalıcılık yok.
+
+### 🔷 ETL & Streaming
+
+* Kafka Connect, Debezium, Spark Structured Streaming → near-real-time ETL akışlarında tercih edilir.
+* CDC (Change Data Capture) stratejileri kritik.
+
+---
+
+# ⚙️ DEVOPS STRATEJİSİ & OPERASYONEL MİMARİ
+
+### 🔷 CI/CD Pipeline
+
+* Prod'a giden yolun her adımı otomatik olmalı: Lint, test, coverage, build, scan, deploy.
+* **Canary Release**, **Blue-Green Deployment**, **Feature Toggles** stratejileri yerleştirilmeli.
+
+### 🔷 Docker & Kubernetes
+
+* Kubernetes cluster için:
+
+  * **RBAC**
+  * **Pod Affinity/Anti-affinity**
+  * **Resource Limits**
+  * **Liveness/Readiness Probes**
+  * **Horizontal Pod Autoscaler**
+* Helm chart’lar ile deploy yönetimi yapılmalı.
+
+### 🔷 Infrastructure as Code
+
+* Terraform: Environment yönetimini standardize eder.
+* Ansible: Konfigürasyon ve provisioning için kullanılır.
+
+---
+
+# 📈 GÖZLEMLEME, METRİK VE LOG’LAMA
+
+### 🔷 Observability
+
+* **3 Pilar:** Metrics (Prometheus), Logs (EFK/ELK), Traces (OpenTelemetry).
+* SLIs, SLOs, Error Budget kavramları oturtulmalı.
+* **Business KPI + Teknik metrikler** birlikte analiz edilmeli.
+
+### 🔷 Alerting & Incident Management
+
+* Prometheus + Alertmanager
+* Sentry, Opsgenie, PagerDuty entegrasyonu
+* Runbook dokümantasyonu ve post-mortem analiz kültürü olmalı.
+
+---
+
+# 📊 ORGANİZASYONEL & STRATEJİK BAKIŞ
+
+### 🔷 Conway’s Law & Team Topologies
+
+* Takımların yapısı, ortaya çıkan yazılım mimarisini şekillendirir.
+* Stream-Aligned Teams, Enabling Teams, Platform Teams kavramları uygulanmalı.
+
+### 🔷 Build vs Buy Kararı
+
+* Kendi ürününü geliştirmenin sürdürülebilirliği, güvenlik ve inovasyon potansiyeli göz önünde bulundurulmalı.
+* **Vendor lock-in**, **data portability**, **operational cost** gibi faktörler analiz edilmeli.
+
+### 🔷 Total Cost of Ownership (TCO)
+
+* Bir teknolojinin sadece kurulum değil, eğitim, bakım, migration ve büyüme maliyeti değerlendirilmelidir.
+
+---
+
+# ⚡ TL;DR — Expert Seviyesi 10 Emir
+
+1. **Mimariyi değil, problemi çöz.**
+2. **Teknoloji seçimi değil, strateji sun.**
+3. **Kod yazmadan önce sistem tasarla.**
+4. **Monitoring’i sonradan değil baştan koy.**
+5. **Veri modelini zamana karşı tasarla.**
+6. **Her teknoloji teknik değil, aynı zamanda politik bir tercihtir.**
+7. **Performans sorunları %80 mimaride saklıdır.**
+8. **Güvenlik, "later" değil "first" olmalı.**
+9. **Takım yapısı kod kalitesini doğrudan etkiler.**
+10. **Sadelik ustalıktır.**
+
+---
+
+İstersen:
+
+* Bu dökümanı sunum formatına çevirebilirim (PowerPoint, PDF)
+* Takım içi mimari eğitim veya onboarding için özelleştirebilirim
+* Şu anki projene özel mimari önerilerle güncelleyebilirim
+
+Hangisiyle devam edelim, uzmanı uzmana danışıyor 😎
